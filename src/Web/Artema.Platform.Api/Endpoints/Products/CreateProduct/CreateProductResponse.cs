@@ -1,3 +1,5 @@
+using NodaTime;
+
 namespace Artema.Platform.Api.Endpoints.CreateProduct;
 
 public record CreateProductResponse
@@ -6,5 +8,5 @@ public record CreateProductResponse
     public string Name { get; init; } = default!;
     public long Pvp { get; init; }
     public Guid? CategoryId { get; init; }
-    public DateTime CreatedAt { get; init; }
+    public Instant CreatedAt { get; init; }
 }

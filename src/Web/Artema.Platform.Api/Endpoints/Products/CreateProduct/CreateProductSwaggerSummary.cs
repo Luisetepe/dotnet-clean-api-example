@@ -1,5 +1,6 @@
 using Artema.Platform.Api.Models;
 using FastEndpoints;
+using NodaTime;
 
 namespace Artema.Platform.Api.Endpoints.CreateProduct;
 
@@ -20,7 +21,7 @@ public class CreateProductSwaggerSummary : Summary<CreateProductEndpoint>
             Name = "CocaCola",
             Pvp = 1000,
             CategoryId = Guid.NewGuid(),
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = Instant.FromUtc(2021, 10, 1, 0, 0, 0)
         });
         Response(400, "Produced when the provided request is not valid.", "application/problem+json", example: new ValidationExceptionResponse
         {
