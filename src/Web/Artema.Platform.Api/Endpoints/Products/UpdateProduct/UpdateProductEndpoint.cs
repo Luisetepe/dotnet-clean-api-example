@@ -19,7 +19,7 @@ public class UpdateProductEndpoint : Endpoint<UpdateProductRequest>
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(UpdateProductRequest request, CancellationToken cancellationToken = default)
+    public override async Task HandleAsync(UpdateProductRequest request, CancellationToken cancellationToken)
     {
         await _sender.Send
         (
@@ -33,6 +33,6 @@ public class UpdateProductEndpoint : Endpoint<UpdateProductRequest>
             cancellationToken
         );
 
-        await SendNoContentAsync();
+        await SendNoContentAsync(cancellationToken);
     }
 }

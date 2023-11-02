@@ -23,6 +23,6 @@ public class DeleteProductEndpoint : Endpoint<DeleteProductRequest>
     {
         await _sender.Send(new DeleteProductCommand{ Id = request.Id }, cancellationToken);
 
-        await SendOkAsync();
+        await SendOkAsync(cancellationToken);
     }
 }
