@@ -10,8 +10,10 @@ public class EfCoreUnitOfWork : IUnitOfWork
     private readonly ArtemaPlatformDbContext _dbContext;
     private bool _disposed;
     private IProductRepository? _productRepository;
+    private IProductCategoryRepository? _productCategoryRepository;
 
     public IProductRepository ProductRepository => _productRepository ??= new ProductRepository(_dbContext);
+    public IProductCategoryRepository ProductCategoryRepository => _productCategoryRepository ??= new ProductCategoryRepository(_dbContext);
 
     public EfCoreUnitOfWork(ArtemaPlatformDbContext dbContext)
     {

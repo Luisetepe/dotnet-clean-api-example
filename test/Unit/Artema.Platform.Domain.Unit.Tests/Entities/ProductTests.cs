@@ -1,7 +1,6 @@
 using Artema.Platform.Domain.Entities;
 using Artema.Platform.Domain.Exceptions;
 using NodaTime;
-using Shouldly;
 
 namespace Artema.Platform.Domain.Unit.Tests.Entities;
 

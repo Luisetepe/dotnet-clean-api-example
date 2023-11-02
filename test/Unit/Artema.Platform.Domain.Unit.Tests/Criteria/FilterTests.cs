@@ -1,6 +1,5 @@
 using Artema.Platform.Domain.Criteria;
 using Artema.Platform.Domain.Exceptions;
-using Shouldly;
 
 namespace Artema.Platform.Domain.Unit.Tests.Criteria;
 

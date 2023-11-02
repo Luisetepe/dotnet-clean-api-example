@@ -2,7 +2,6 @@ using System.Net;
 using Artema.Platform.Api.Endpoints.GetProductById;
 using FastEndpoints;
 using FastEndpoints.Testing;
-using Shouldly;
 
 namespace Artema.Platform.Api.Integration.Tests.Endpoints;
 

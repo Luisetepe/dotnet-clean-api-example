@@ -2,7 +2,6 @@ using Artema.Platform.Api.Endpoints.SearchProducts;
 using Artema.Platform.Api.Models;
 using FastEndpoints;
 using FastEndpoints.Testing;
-using Shouldly;
 
 namespace Artema.Platform.Api.Integration.Tests.Endpoints;
 

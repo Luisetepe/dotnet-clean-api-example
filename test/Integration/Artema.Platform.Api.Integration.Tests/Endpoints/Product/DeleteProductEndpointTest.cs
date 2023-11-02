@@ -2,7 +2,6 @@ using Artema.Platform.Api.Endpoints.DeleteProduct;
 using System.Net;
 using FastEndpoints.Testing;
 using Microsoft.EntityFrameworkCore;
-using Shouldly;
 using FastEndpoints;
 using Artema.Platform.Api.Models;
 

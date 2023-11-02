@@ -24,7 +24,7 @@ public class SearchProductsEndpoint : Endpoint<SearchProductsRequest, SearchProd
         var criteria = request.ToCriteria();
         var result = await _sender.Send(new SearchProductsQuery{Criteria = criteria}, ct);
 
-        await SendAsync(
+        await SendOkAsync(
             new SearchProductsResponse{
                 Products = result.Products.Select(p => new SearchProductsResponse.Product
                 {

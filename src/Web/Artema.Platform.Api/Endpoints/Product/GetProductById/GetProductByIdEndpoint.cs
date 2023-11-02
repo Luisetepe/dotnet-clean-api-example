@@ -23,7 +23,7 @@ public class GetProductByIdEndpoint : Endpoint<GetProductByIdRequest, GetProduct
     {
         var result = await _sender.Send(new GetProductByIdQuery{Id = request.Id}, ct);
 
-        await SendAsync(
+        await SendOkAsync(
             new GetProductByIdResponse
             {
                 Id = result.ProductData.Id,
