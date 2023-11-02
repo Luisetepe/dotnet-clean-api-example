@@ -1,9 +1,7 @@
 using Artema.Platform.Infrastructure.Data;
 using Artema.Platform.Infrastructure.Data.DbContexts;
 using Artema.Platform.Infrastructure.Data.Seeding;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Artema.Platform.Api.Integration.Tests.Endpoints;

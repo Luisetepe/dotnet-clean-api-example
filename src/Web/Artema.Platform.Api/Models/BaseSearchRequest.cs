@@ -1,4 +1,3 @@
-using Artema.Platform.Api.Extensions;
 using Artema.Platform.Domain.Criteria;
 using FastEndpoints;
 using FluentValidation;

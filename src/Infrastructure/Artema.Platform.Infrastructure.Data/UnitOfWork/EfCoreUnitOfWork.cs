@@ -8,9 +8,10 @@ namespace Artema.Platform.Infrastructure.Data.UnitOfWork;
 public class EfCoreUnitOfWork : IUnitOfWork
 {
     private readonly ArtemaPlatformDbContext _dbContext;
-    private IProductRepository _productRepository = default!;
+    private bool _disposed;
+    private IProductRepository? _productRepository;
 
-    public IProductRepository ProductRepository { get => _productRepository ??= new ProductRepository(_dbContext); }
+    public IProductRepository ProductRepository => _productRepository ??= new ProductRepository(_dbContext);
 
     public EfCoreUnitOfWork(ArtemaPlatformDbContext dbContext)
     {
@@ -29,6 +30,19 @@ public class EfCoreUnitOfWork : IUnitOfWork
 
     public void Dispose()
     {
-        _dbContext.Dispose();
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+    
+    private void Dispose(bool disposing)
+    {
+        if (_disposed) return;
+        
+        if (disposing)
+        {
+            _dbContext.Dispose();
+        }
+
+        _disposed = true;
     }
 }
