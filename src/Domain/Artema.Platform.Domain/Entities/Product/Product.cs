@@ -3,17 +3,15 @@ using NodaTime;
 
 namespace Artema.Platform.Domain.Entities;
 
-public class Product
+public class Product : Entity<EntityId>
 {
-    public EntityId Id { get; }
-    public ProductName Name { get; }
+    public ProductName Name { get; private set; }
     public ProductPvp Pvp { get; private set; }
     public EntityId? CategoryId { get; private set; }
     public Instant CreateDate { get; }
 
-    private Product(EntityId id, ProductName name, ProductPvp pvp, EntityId? categoryId, Instant createDate)
+    private Product(EntityId id, ProductName name, ProductPvp pvp, EntityId? categoryId, Instant createDate) : base(id)
     {
-        Id = id;
         Name = name;
         Pvp = pvp;
         CategoryId = categoryId;
@@ -30,5 +28,12 @@ public class Product
             categoryId is not null ? EntityId.FromValue(categoryId.Value) : null,
             createDate
         );
+    }
+
+    public void UpdateData(string name, long pvp, Guid? categoryId)
+    {
+        Name = ProductName.FromValue(name);
+        Pvp = ProductPvp.FromValue(pvp);
+        CategoryId = categoryId is not null ? EntityId.FromValue(categoryId.Value) : null;
     }
 }

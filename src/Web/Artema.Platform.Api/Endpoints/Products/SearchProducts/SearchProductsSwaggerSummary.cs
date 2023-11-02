@@ -7,7 +7,7 @@ public class SearchProductsSwaggerSummary : Summary<SearchProductsEndpoint>
 {
     public SearchProductsSwaggerSummary()
     {
-        Summary = "Search Products by a given criteria.";
+        Summary = "Search products by a given criteria.";
         ExampleRequest = new SearchProductsRequest
         {
             Filters = new[] { new SearchFilter { Field = "pvp", Value = "2500", Operator = "gte" } },

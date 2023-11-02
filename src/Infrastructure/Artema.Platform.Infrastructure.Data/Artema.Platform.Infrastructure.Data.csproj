@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\Artema.Platform.Domain\Artema.Platform.Domain.csproj" />
+    <ProjectReference Include="..\..\Application\Artema.Platform.Application\Artema.Platform.Application.csproj" />
   </ItemGroup>
 
 </Project>

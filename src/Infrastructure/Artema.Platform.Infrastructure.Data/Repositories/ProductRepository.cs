@@ -1,6 +1,7 @@
 using Artema.Platform.Domain.Criteria;
 using Artema.Platform.Domain.Entities;
 using Artema.Platform.Domain.Repositories;
+using Artema.Platform.Domain.ValueObjects;
 using Artema.Platform.Infrastructure.Data.CriteriaEngines;
 using Artema.Platform.Infrastructure.Data.DbContexts;
 using Artema.Platform.Infrastructure.Data.Exceptions;
@@ -38,11 +39,11 @@ public class ProductRepository : IProductRepository
         return result;
     }
 
-    public async Task<Product?> GetProductById(Guid id, CancellationToken ct = default)
+    public async Task<Product?> GetProductById(EntityId id, CancellationToken ct = default)
     {
         var result = await _dbContext.Products
             .AsNoTracking()
-            .Where(table => table.Id == id)
+            .Where(table => table.Id == id.Value)
             .Select(table => Product.FromPrimitives(table.Id, table.Name, table.Pvp, table.CategoryId, table.CreatedAt))
             .FirstOrDefaultAsync(ct);
 
@@ -60,7 +61,7 @@ public class ProductRepository : IProductRepository
             throw new RelationNotFoundException(nameof(Product), nameof(product.CategoryId), product.CategoryId!.Value.ToString());
         }
 
-        var table = new ProductTable
+        var productTable = new ProductTableModel
         {
             Id = product.Id.Value,
             Name = product.Name.Value,
@@ -69,10 +70,49 @@ public class ProductRepository : IProductRepository
             CreatedAt = product.CreateDate
         };
 
-        await _dbContext.Products.AddAsync(table, ct);
+        await _dbContext.Products.AddAsync(productTable, ct);
         await _dbContext.SaveChangesAsync(ct);
 
         return product;
     }
 
+    public async Task UpdateProduct(Product product, CancellationToken ct)
+    {
+        if
+        (
+            product.CategoryId is not null
+            && !await _dbContext.ProductCategories.AnyAsync(table => table.Id == product.CategoryId.Value, ct)
+        )
+        {
+            throw new RelationNotFoundException(nameof(Product), nameof(Product.CategoryId), product.CategoryId.Value.ToString());
+        }
+
+        var productTable = new ProductTableModel
+        {
+            Id = product.Id.Value,
+            Name = product.Name.Value,
+            Pvp = product.Pvp.Value,
+            CategoryId = product.CategoryId?.Value,
+            CreatedAt = product.CreateDate
+        };
+
+        _dbContext.Update(productTable);
+    }
+
+    public Task DeleteProduct(EntityId id, CancellationToken ct)
+    {
+        var productTable = new ProductTableModel
+        {
+            Id = id.Value
+        };
+
+        _dbContext.Remove(productTable);
+
+        return Task.CompletedTask;
+    }
+
+    public Task<bool> ExistsProduct(EntityId id, CancellationToken ct = default)
+    {
+        return _dbContext.Products.AsNoTracking().AnyAsync(x => x.Id == id.Value, ct);
+    }
 }

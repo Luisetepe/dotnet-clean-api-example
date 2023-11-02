@@ -67,6 +67,7 @@ public static class ExceptionHandlerExtensions
         var responseTask = ex switch
         {
             InvalidCriteriaException or InvalidColumnException or RelationNotFoundException => BuildInvalidInputResponse(ctx, ex),
+            EntityNotFoundException => BuildNotFoundResponse(ctx, ex),
             _ => BuildInternalErrorResponse(ctx)
         };
 

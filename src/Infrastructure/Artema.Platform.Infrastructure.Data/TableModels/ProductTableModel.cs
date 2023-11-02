@@ -3,23 +3,23 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Artema.Platform.Infrastructure.Data.TableModels;
 
-public class ProductTable : AuditableBaseModel
+public class ProductTableModel : AuditableBaseModel
 {
     public Guid Id { get; init; }
     public string Name { get; set; } = default!;
     public long Pvp { get; set; }
     public Guid? CategoryId { get; set; }
 
-    public ProductCategoryTable? Category { get; set; }
+    public ProductCategoryTableModel? Category { get; set; }
 }
 
 public class ProductTableConfiguration
-    : AuditableBaseModelConfiguration<ProductTable>
+    : AuditableBaseModelConfiguration<ProductTableModel>
 {
-    public override void Configure(EntityTypeBuilder<ProductTable> builder)
+    public override void Configure(EntityTypeBuilder<ProductTableModel> builder)
     {
         base.Configure(builder);
-        
+
         builder.ToTable("PRODUCTS");
 
         builder.HasKey(p => p.Id);

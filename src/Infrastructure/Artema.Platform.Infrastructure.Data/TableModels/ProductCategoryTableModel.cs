@@ -3,19 +3,19 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Artema.Platform.Infrastructure.Data.TableModels;
 
-public class ProductCategoryTable : AuditableBaseModel
+public class ProductCategoryTableModel : AuditableBaseModel
 {
     public Guid Id { get; init; }
     public string Name { get; set; } = default!;
     public bool IsService { get; set; }
 
-    public ICollection<ProductTable> Products { get; set; } = default!;
+    public ICollection<ProductTableModel> Products { get; set; } = default!;
 }
 
 public class ProductCategoryTableConfiguration
-    : AuditableBaseModelConfiguration<ProductCategoryTable>
+    : AuditableBaseModelConfiguration<ProductCategoryTableModel>
 {
-    public override void Configure(EntityTypeBuilder<ProductCategoryTable> builder)
+    public override void Configure(EntityTypeBuilder<ProductCategoryTableModel> builder)
     {
         base.Configure(builder);
 

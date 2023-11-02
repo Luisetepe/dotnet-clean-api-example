@@ -1,6 +1,5 @@
 using Artema.Platform.Application.Interfaces;
 using Artema.Platform.Domain.Entities;
-using Artema.Platform.Domain.Repositories;
 using MediatR;
 using NodaTime;
 
@@ -8,18 +7,18 @@ namespace Artema.Platform.Application.UseCases.Commands.CreateProduct;
 
 public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, CreateProductCommandResponse>
 {
-    private readonly IProductRepository _productRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUniqueIdentifierGenerator _identifierGenerator;
     private readonly IClock _clock;
 
     public CreateProductCommandHandler
     (
-        IProductRepository productRepository, 
+        IUnitOfWork unitOfWork,
         IUniqueIdentifierGenerator identifierGenerator,
         IClock clock
     )
     {
-        _productRepository = productRepository;
+        _unitOfWork = unitOfWork;
         _identifierGenerator = identifierGenerator;
         _clock = clock;
     }
@@ -35,7 +34,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             _clock.GetCurrentInstant()
         );
 
-        await _productRepository.CreateProduct(product, ct);
+        await _unitOfWork.ProductRepository.CreateProduct(product, ct);
 
         return new CreateProductCommandResponse
         {

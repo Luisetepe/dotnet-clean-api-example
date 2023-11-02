@@ -8,7 +8,7 @@ public class CreateProductSwaggerSummary : Summary<CreateProductEndpoint>
 {
     public CreateProductSwaggerSummary()
     {
-        Summary = "Create a new product";
+        Summary = "Creates a new product";
         ExampleRequest = new CreateProductRequest
         {
             Name = "CocaCola",

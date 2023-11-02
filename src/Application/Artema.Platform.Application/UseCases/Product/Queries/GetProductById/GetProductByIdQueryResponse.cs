@@ -12,6 +12,6 @@ public record GetProductByIdQueryResponse
         public Guid? CategoryId { get; init; }
         public Instant CreatedAt { get; init; }
     }
-    
-    public Product? ProductData { get; init; }
+
+    public Product ProductData { get; init; } = default!;
 }

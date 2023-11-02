@@ -23,12 +23,6 @@ public class GetProductByIdEndpoint : Endpoint<GetProductByIdRequest, GetProduct
     {
         var result = await _sender.Send(new GetProductByIdQuery{Id = request.Id}, ct);
 
-        if (result.ProductData is null)
-        {
-            await SendNotFoundAsync(ct);
-            return;
-        }
-        
         await SendAsync(
             new GetProductByIdResponse
             {

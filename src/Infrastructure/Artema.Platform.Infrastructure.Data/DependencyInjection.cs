@@ -1,6 +1,6 @@
-using Artema.Platform.Domain.Repositories;
+using Artema.Platform.Application.Interfaces;
 using Artema.Platform.Infrastructure.Data.DbContexts;
-using Artema.Platform.Infrastructure.Data.Repositories;
+using Artema.Platform.Infrastructure.Data.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
@@ -12,14 +12,14 @@ public static class DependencyInjection
     public static IServiceCollection AddDataInfrastructure(this IServiceCollection services)
     {
         return services
-            .AddScoped<IProductRepository, ProductRepository>();
+            .AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
     }
-    
+
     public static IServiceCollection AddDbContextInfrastructure(this IServiceCollection services, string connectionString)
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
         dataSourceBuilder.UseNodaTime();
-        
+
         var dataSource = dataSourceBuilder.Build();
 
         return services

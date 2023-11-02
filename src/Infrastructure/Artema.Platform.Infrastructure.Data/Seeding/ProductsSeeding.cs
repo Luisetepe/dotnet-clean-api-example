@@ -9,15 +9,15 @@ public class ProductsSeeding : IDatabaseSeeder
     public async Task SeedTestDataAsync(ArtemaPlatformDbContext dbContext)
     {
         // Create ten categories
-        var categories = new List<ProductCategoryTable>
+        var categories = new List<ProductCategoryTableModel>
         {
             new() { Id = Guid.NewGuid(), Name = "Bebidas" },
             new() { Id = Guid.NewGuid(), Name = "Snacks" },
             new() { Id = Guid.NewGuid(), Name = "Streaming" },
 
         };
-        
-        var products = new List<ProductTable>
+
+        var products = new List<ProductTableModel>
         {
             new() { Id = Guid.NewGuid(), Name = "CocaCola", Pvp = 2500, CategoryId = categories[0].Id },
             new() { Id = Guid.NewGuid(), Name = "Fanta Naranja", Pvp = 1500, CategoryId = categories[0].Id },
