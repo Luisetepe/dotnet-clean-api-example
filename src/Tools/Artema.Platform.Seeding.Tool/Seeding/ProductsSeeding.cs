@@ -1,14 +1,14 @@
 using Artema.Platform.Infrastructure.Data.DbContexts;
+using Artema.Platform.Infrastructure.Data.Seeding;
 using Artema.Platform.Infrastructure.Data.TableModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace Artema.Platform.Infrastructure.Data.Seeding;
+namespace Artema.Platform.Seeding.Tool.Seeding;
 
 public class ProductsSeeding : IDatabaseSeeder
 {
     public async Task SeedTestDataAsync(ArtemaPlatformDbContext dbContext)
     {
-        // Create ten categories
         var categories = new List<ProductCategoryTableModel>
         {
             new() { Id = Guid.NewGuid(), Name = "Bebidas", IsService = false },

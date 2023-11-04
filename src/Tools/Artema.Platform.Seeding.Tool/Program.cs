@@ -1,4 +1,4 @@
-﻿using Artema.Platform.Infrastructure.Data;
+﻿using System.Reflection;
 using Artema.Platform.Infrastructure.Data.DbContexts;
 using Artema.Platform.Infrastructure.Data.Seeding;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +28,7 @@ try
     var dbContext = new ArtemaPlatformDbContext(options.Options);
 
     var seeder = new EfCoreSeeder(dbContext);
-    await seeder.SeedTestDataAsync(ArtemaPlatformInfrastructureDataAssembly.Reference);
+    await seeder.SeedTestDataAsync(Assembly.GetExecutingAssembly());
 
     Console.WriteLine("All data was successfully seeded!");
 }
