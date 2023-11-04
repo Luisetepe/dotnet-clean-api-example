@@ -1,5 +1,6 @@
 using Artema.Platform.Application.Interfaces;
 using Artema.Platform.Infrastructure.Data.DbContexts;
+using Artema.Platform.Infrastructure.Data.Services;
 using Artema.Platform.Infrastructure.Data.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,7 @@ public static class DependencyInjection
         var dataSource = dataSourceBuilder.Build();
 
         return services
+            .AddSingleton<IUniqueIdentifierGenerator, PgUniqueIdentifierGenerator>()
             .AddDbContext<ArtemaPlatformDbContext>(options =>
                 options.UseNpgsql(dataSource, settings => settings.UseNodaTime())
             );

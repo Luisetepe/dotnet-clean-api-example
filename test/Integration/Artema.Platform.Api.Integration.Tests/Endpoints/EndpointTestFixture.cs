@@ -1,3 +1,4 @@
+using System.Reflection;
 using Artema.Platform.Infrastructure.Data;
 using Artema.Platform.Infrastructure.Data.DbContexts;
 using Artema.Platform.Infrastructure.Data.Seeding;
@@ -15,18 +16,18 @@ public class EndpointTestFixture : TestFixture<Program>
     protected override async Task SetupAsync()
     {
         var dbContext = Services.GetRequiredService<ArtemaPlatformDbContext>();
-        
+
         await dbContext.Database.EnsureDeletedAsync();
         await dbContext.Database.EnsureCreatedAsync();
-        
+
         var seeder = new EfCoreSeeder(dbContext);
-        await seeder.SeedTestDataAsync(ArtemaPlatformInfrastructureDataAssembly.Reference);
+        await seeder.SeedTestDataAsync(Assembly.GetExecutingAssembly());
     }
-    
+
     protected override void ConfigureServices(IServiceCollection services)
     {
         // Uncomment below for using InMemory EFCore instead of real database driver.
-        
+
         // services
         //     .RemoveAll(typeof(DbContext))
         //     .RemoveAll(typeof(DbContextOptions))
@@ -41,7 +42,7 @@ public class EndpointTestFixture : TestFixture<Program>
         await dbContext.Database.CloseConnectionAsync();
         await dbContext.Database.EnsureDeletedAsync();
     }
-    
+
     public ArtemaPlatformDbContext GetDbContext()
     {
         return Services.GetRequiredService<ArtemaPlatformDbContext>();

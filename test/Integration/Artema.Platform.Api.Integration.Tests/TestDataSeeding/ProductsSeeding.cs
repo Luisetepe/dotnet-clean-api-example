@@ -4,7 +4,7 @@ using Artema.Platform.Infrastructure.Data.Services;
 using Artema.Platform.Infrastructure.Data.TableModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace Artema.Platform.Seeding.Tool.Seeding;
+namespace Artema.Platform.Api.Integration.Tests.TestDataSeeding;
 
 public class ProductsSeeding : IDatabaseSeeder
 {

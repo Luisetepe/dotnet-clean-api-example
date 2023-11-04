@@ -10,8 +10,4 @@
       <ProjectReference Include="..\..\Application\Artema.Platform.Application\Artema.Platform.Application.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="RT.Comb" Version="4.0.1" />
-    </ItemGroup>
-
 </Project>

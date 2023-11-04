@@ -1,4 +1,4 @@
-using Artema.Platform.Api.Endpoints.ProductCategory.GetAllProductCategories;
+using Artema.Platform.Api.Endpoints.GetAllProductCategories;
 using FastEndpoints;
 using FastEndpoints.Testing;
 using Microsoft.EntityFrameworkCore;
