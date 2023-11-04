@@ -1,4 +1,4 @@
-namespace Artema.Platform.Api.Endpoints.ProductCategory.GetAllProductCategories;
+namespace Artema.Platform.Api.Endpoints.GetAllProductCategories;
 
 public record GetAllProductCategoriesResponse
 {
@@ -8,6 +8,6 @@ public record GetAllProductCategoriesResponse
         public string Name { get; init; } = default!;
         public bool IsService { get; set; }
     }
-    
+
     public IEnumerable<ProductCategory> ProductCategories { get; init; } = default!;
 }

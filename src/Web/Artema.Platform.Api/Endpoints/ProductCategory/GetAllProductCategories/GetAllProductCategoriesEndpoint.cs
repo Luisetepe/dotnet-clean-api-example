@@ -2,7 +2,7 @@ using Artema.Platform.Application.UseCases.Queries;
 using FastEndpoints;
 using MediatR;
 
-namespace Artema.Platform.Api.Endpoints.ProductCategory.GetAllProductCategories;
+namespace Artema.Platform.Api.Endpoints.GetAllProductCategories;
 
 public class GetAllProductCategoriesEndpoint : EndpointWithoutRequest<GetAllProductCategoriesResponse>
 {

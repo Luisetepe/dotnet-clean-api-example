@@ -42,8 +42,8 @@ public class SearchProductsSwaggerSummary : Summary<SearchProductsEndpoint>
             Message = "One or more validation errors occurred",
             Errors = new Dictionary<string, string[]>
             {
-                {"OrderBy", new [] { "Value must be null or not empty." }},
-                {"Limit", new [] { "Value must be greater than 0." }}
+                {"orderBy", new [] { "'Order By' must not be empty." }},
+                {"limit", new [] { "'Limit' must be greater than '0'." }}
             }
         });
     }

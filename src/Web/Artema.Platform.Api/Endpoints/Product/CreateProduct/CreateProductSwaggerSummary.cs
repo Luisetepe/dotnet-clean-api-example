@@ -30,9 +30,9 @@ public class CreateProductSwaggerSummary : Summary<CreateProductEndpoint>
             Message = "One or more validation errors occurred.",
             Errors = new Dictionary<string, string[]>
             {
-                {"Name", new []{ "Value must be not empty." }},
-                {"Pvp", new []{ "Value must be greater than 0." }},
-                {"CategoryId", new []{ "Value must be not empty." }}
+                {"Name", new []{ "'Name' must not be empty." }},
+                {"Pvp", new []{ "'Pvp' must be greater than '0'." }},
+                {"CategoryId", new []{ "'CategoryId' must not be empty." }}
             }
         });
     }

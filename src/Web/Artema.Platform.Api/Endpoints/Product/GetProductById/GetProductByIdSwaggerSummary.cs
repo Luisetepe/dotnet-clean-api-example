@@ -28,7 +28,7 @@ public class GetProductByIdSwaggerSummary : Summary<GetProductByIdEndpoint>
             Message = "One or more validation errors occurred.",
             Errors = new Dictionary<string, string[]>
             {
-                {"Id", new []{ "Value must be not empty." }}
+                {"Id", new []{ "'Id' must not be empty." }}
             }
         });
         Response(404, "Produced when the Product with given Id is not found.", "application/problem+json", example: new ExceptionHttpResponse

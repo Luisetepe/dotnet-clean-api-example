@@ -1,20 +1,18 @@
-﻿using Artema.Platform.Api.Models;
+using Artema.Platform.Api.Models;
 using FastEndpoints;
 
-namespace Artema.Platform.Api.Endpoints.UpdateProduct;
+namespace Artema.Platform.Api.Endpoints.DeleteProduct;
 
-public class UpdateProductSwaggerSummary : Summary<UpdateProductEndpoint>
+public class DeleteProductSwaggerSummary : Summary<DeleteProductEndpoint>
 {
-    public UpdateProductSwaggerSummary()
+    public DeleteProductSwaggerSummary()
     {
-        Summary = "Updates a product";
-        ExampleRequest = new UpdateProductRequest
+        Summary = "Deletes a product";
+        ExampleRequest = new DeleteProductRequest
         {
-            Id = Guid.NewGuid(),
-            Name = "Cocacola modified",
-            Pvp = 10500
+            Id = Guid.NewGuid()
         };
-        Response(204, "Product updated");
+        Response(204, "Product was successfully deleted.");
         Response(400, "Produced when the provided request is not valid.", "application/problem+json", example: new ValidationExceptionResponse
         {
             StatusCode = 400,
@@ -22,9 +20,7 @@ public class UpdateProductSwaggerSummary : Summary<UpdateProductEndpoint>
             Message = "One or more validation errors occurred.",
             Errors = new Dictionary<string, string[]>
             {
-                {"Name", new []{ "'Name' must not be empty." }},
-                {"Pvp", new []{ "'Pvp' must be greater than '0'." }},
-                {"CategoryId", new []{ "'CategoryId' must not be empty." }}
+                {"Id", new []{ "'Id' must not be empty." }}
             }
         });
         Response(404, "Produced when the Product with given Id is not found.", "application/problem+json", example: new ExceptionHttpResponse

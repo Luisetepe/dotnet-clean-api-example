@@ -11,9 +11,9 @@ public class ProductsSeeding : IDatabaseSeeder
         // Create ten categories
         var categories = new List<ProductCategoryTableModel>
         {
-            new() { Id = Guid.NewGuid(), Name = "Bebidas" },
-            new() { Id = Guid.NewGuid(), Name = "Snacks" },
-            new() { Id = Guid.NewGuid(), Name = "Streaming" },
+            new() { Id = Guid.NewGuid(), Name = "Bebidas", IsService = false },
+            new() { Id = Guid.NewGuid(), Name = "Snacks", IsService = false },
+            new() { Id = Guid.NewGuid(), Name = "Streaming", IsService = true },
 
         };
 
