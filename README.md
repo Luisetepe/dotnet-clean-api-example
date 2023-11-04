@@ -7,6 +7,7 @@ Example of a clean REST Api build with ASP.NET Core, FastEndpoints, MediatR and 
 ## Prerequisites
 
 - [.NET SDK](https://dotnet.microsoft.com/download)
+- [Entity Framework Core tools](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
 
 ## Installation
 
@@ -19,6 +20,26 @@ dotnet restore
 ```
 
 ## Usage
+
+First make sure you have a PostgreSQL database available in your local machine with these settings (or change both `appSettings.json` from the Seeding.Tool and the Api projects):
+
+```
+host=127.0.0.1
+user=postgres
+pass=postgrespw
+```
+
+Then you can apply migrations to create the database schema with:
+```
+dotnet ef database update -s src/Web/Artema.Platform.Api
+```
+
+After that, you can seed test data running the Seeding.Tool project with:
+```
+dotnet run --project src/Tools/Artema.Platform.Seeding.Tool
+```
+
+Finally, you can just build and run the Api project and test it for yourself:
 
 ```bash
 dotnet build
