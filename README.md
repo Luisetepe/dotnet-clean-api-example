@@ -16,7 +16,7 @@ A step by step series of examples that tell you how to get a development environ
 ```bash
 git clone https://github.com/Luisetepe/dotnet-clean-api-example.git
 cd dotnet-clean-api-example
-dotnet restore
+dotnet build
 ```
 
 ## Usage
@@ -30,19 +30,18 @@ pass=postgrespw
 ```
 
 Then you can apply migrations to create the database schema with:
-```
+```bash
 dotnet ef database update -s src/Web/Artema.Platform.Api
 ```
 
 After that, you can seed test data running the Seeding.Tool project with:
-```
+```bash
 dotnet run --project src/Tools/Artema.Platform.Seeding.Tool
 ```
 
 Finally, you can just build and run the Api project and test it for yourself:
 
 ```bash
-dotnet build
 dotnet run --project src/Web/Artema.Platform.Api/Artema.Platform.Api.csproj
 ```
 
