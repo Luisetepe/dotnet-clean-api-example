@@ -5,7 +5,7 @@ using Artema.Platform.Infrastructure.Data.Repositories.EntityFramework;
 
 namespace Artema.Platform.Infrastructure.Data.UnitOfWork;
 
-public class EfCoreUnitOfWork : IUnitOfWork
+public class EntityFrameworkUnitOfWork : IUnitOfWork
 {
     private readonly ArtemaPlatformDbContext _dbContext;
     private bool _disposed;
@@ -15,7 +15,7 @@ public class EfCoreUnitOfWork : IUnitOfWork
     public IProductRepository ProductRepository => _productRepository ??= new ProductEfRepository(_dbContext);
     public IProductCategoryRepository ProductCategoryRepository => _productCategoryRepository ??= new ProductCategoryEfRepository(_dbContext);
 
-    public EfCoreUnitOfWork(ArtemaPlatformDbContext dbContext)
+    public EntityFrameworkUnitOfWork(ArtemaPlatformDbContext dbContext)
     {
         _dbContext = dbContext;
     }
