@@ -8,13 +8,13 @@ using Artema.Platform.Infrastructure.Data.Exceptions;
 using Artema.Platform.Infrastructure.Data.TableModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace Artema.Platform.Infrastructure.Data.Repositories;
+namespace Artema.Platform.Infrastructure.Data.Repositories.EntityFramework;
 
-public class ProductRepository : IProductRepository
+public class ProductEfRepository : IProductRepository
 {
     private readonly ArtemaPlatformDbContext _dbContext;
 
-    public ProductRepository(ArtemaPlatformDbContext dbContext)
+    public ProductEfRepository(ArtemaPlatformDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -50,16 +50,9 @@ public class ProductRepository : IProductRepository
         return result;
     }
 
-    public async Task<Product> CreateProduct(Product product, CancellationToken ct = default)
+    public async Task CreateProduct(Product product, CancellationToken ct = default)
     {
-        if
-        (
-            product.CategoryId is not null
-            && !await _dbContext.ProductCategories.AnyAsync(table => table.Id == product.CategoryId.Value, ct)
-        )
-        {
-            throw new RelationNotFoundException(nameof(Product), nameof(product.CategoryId), product.CategoryId!.Value.ToString());
-        }
+        await CheckCategoryId(product.CategoryId, ct);
 
         var productTable = new ProductTableModel
         {
@@ -72,20 +65,11 @@ public class ProductRepository : IProductRepository
 
         await _dbContext.Products.AddAsync(productTable, ct);
         await _dbContext.SaveChangesAsync(ct);
-
-        return product;
     }
 
     public async Task UpdateProduct(Product product, CancellationToken ct)
     {
-        if
-        (
-            product.CategoryId is not null
-            && !await _dbContext.ProductCategories.AnyAsync(table => table.Id == product.CategoryId.Value, ct)
-        )
-        {
-            throw new RelationNotFoundException(nameof(Product), nameof(Product.CategoryId), product.CategoryId.Value.ToString());
-        }
+        await CheckCategoryId(product.CategoryId, ct);
 
         var productTable = new ProductTableModel
         {
@@ -114,5 +98,17 @@ public class ProductRepository : IProductRepository
     public Task<bool> ExistsProduct(EntityId id, CancellationToken ct = default)
     {
         return _dbContext.Products.AsNoTracking().AnyAsync(x => x.Id == id.Value, ct);
+    }
+
+    private async Task CheckCategoryId(EntityId? categoryId, CancellationToken ct)
+    {
+        if
+        (
+            categoryId is not null
+            && !await _dbContext.ProductCategories.AnyAsync(table => table.Id == categoryId.Value, ct)
+        )
+        {
+            throw new RelationNotFoundException(nameof(Product), nameof(Product.CategoryId), categoryId!.Value.ToString());
+        }
     }
 }

@@ -11,11 +11,11 @@ public class GetAllProductCategoriesQueryHandler : IRequestHandler<GetAllProduct
     {
         _unitOfWork = unitOfWork;
     }
-    
+
     public async Task<GetAllProductCategoriesQueryResponse> Handle(GetAllProductCategoriesQuery request, CancellationToken cancellationToken)
     {
-        var productCategories = await _unitOfWork.ProductCategoryRepository.GetAllProductCategories();
-        
+        var productCategories = await _unitOfWork.ProductCategoryRepository.GetAllProductCategories(cancellationToken);
+
         return new GetAllProductCategoriesQueryResponse
         {
             ProductCategories = productCategories.Select(pc => new GetAllProductCategoriesQueryResponse.ProductCategory

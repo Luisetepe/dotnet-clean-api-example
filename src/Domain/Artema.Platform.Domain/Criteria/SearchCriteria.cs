@@ -17,19 +17,19 @@ public class SearchCriteria
 
     public bool HasFilters()
     {
-        return Filters is not null;
+        return Filters is not null && Filters.Any();
     }
-    
+
     public bool HasOrder()
     {
         return Order is not null;
     }
-    
+
     public bool HasLimit()
     {
         return Limit is not null;
     }
-    
+
     public bool HasOffset()
     {
         return Offset is not null;

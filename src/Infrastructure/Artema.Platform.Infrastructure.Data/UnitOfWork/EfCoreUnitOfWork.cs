@@ -1,7 +1,7 @@
 using Artema.Platform.Application.Interfaces;
 using Artema.Platform.Domain.Repositories;
 using Artema.Platform.Infrastructure.Data.DbContexts;
-using Artema.Platform.Infrastructure.Data.Repositories;
+using Artema.Platform.Infrastructure.Data.Repositories.EntityFramework;
 
 namespace Artema.Platform.Infrastructure.Data.UnitOfWork;
 
@@ -12,8 +12,8 @@ public class EfCoreUnitOfWork : IUnitOfWork
     private IProductRepository? _productRepository;
     private IProductCategoryRepository? _productCategoryRepository;
 
-    public IProductRepository ProductRepository => _productRepository ??= new ProductRepository(_dbContext);
-    public IProductCategoryRepository ProductCategoryRepository => _productCategoryRepository ??= new ProductCategoryRepository(_dbContext);
+    public IProductRepository ProductRepository => _productRepository ??= new ProductEfRepository(_dbContext);
+    public IProductCategoryRepository ProductCategoryRepository => _productCategoryRepository ??= new ProductCategoryEfRepository(_dbContext);
 
     public EfCoreUnitOfWork(ArtemaPlatformDbContext dbContext)
     {
@@ -35,11 +35,11 @@ public class EfCoreUnitOfWork : IUnitOfWork
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-    
+
     private void Dispose(bool disposing)
     {
         if (_disposed) return;
-        
+
         if (disposing)
         {
             _dbContext.Dispose();

@@ -35,6 +35,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         );
 
         await _unitOfWork.ProductRepository.CreateProduct(product, ct);
+        await _unitOfWork.SaveAsync(ct);
 
         return new CreateProductCommandResponse
         {

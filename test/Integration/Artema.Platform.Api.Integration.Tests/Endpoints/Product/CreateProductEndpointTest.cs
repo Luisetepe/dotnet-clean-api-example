@@ -33,6 +33,12 @@ public class CreateProductEndpointTest : TestClass<EndpointTestFixture>
         response.ShouldNotBeNull();
         response.Name.ShouldBe(name);
         response.Pvp.ShouldBe(pvp);
+
+        var product = await dbContext.Products
+            .Include(p => p.Category)
+            .FirstOrDefaultAsync(p => p.Id == response.Id);
+
+        product.ShouldNotBeNull();
     }
 
     [Theory]

@@ -4,5 +4,5 @@ namespace Artema.Platform.Domain.Repositories;
 
 public interface IProductCategoryRepository
 {
-    Task<IEnumerable<ProductCategory>> GetAllProductCategories();
+    Task<IEnumerable<ProductCategory>> GetAllProductCategories(CancellationToken ct = default);
 }

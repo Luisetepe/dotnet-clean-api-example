@@ -32,20 +32,23 @@ public class ProductTests
     [InlineData("a4ccab72-aba3-43c9-aaeb-a546242bf6ef", "CocaCola", 0, "555d9347-57be-44aa-b462-13d394277987")]
     public void Given_Valid_Inputs_Product_Creation_Should_Succeed(string id, string name, long pvp, string? categoryId)
     {
+        var now = SystemClock.Instance.GetCurrentInstant();
         var product = Product.FromPrimitives(
             Guid.Parse(id),
             name,
             pvp,
             categoryId is null ? null : Guid.Parse(categoryId),
-            SystemClock.Instance.GetCurrentInstant()
+            now
         );
         
-        product.Id.Value.ToString().ShouldBeEquivalentTo(id);
-        product.Name.Value.ShouldBeEquivalentTo(name);
-        product.Pvp.Value.ShouldBeEquivalentTo(pvp);
+        product.Id.Value.ToString().ShouldBe(id);
+        product.Name.Value.ShouldBe(name);
+        product.Pvp.Value.ShouldBe(pvp);
         if (categoryId is null)
             product.CategoryId.ShouldBeNull();
         else
-            product.CategoryId!.Value.ToString().ShouldBeEquivalentTo(categoryId);
+            product.CategoryId!.Value.ToString().ShouldBe(categoryId);
+        product.CreateDate.ShouldBe(now);
+        
     }
 }

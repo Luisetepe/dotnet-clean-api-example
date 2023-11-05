@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Artema.Platform.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ArtemaPlatformDbContext))]
-    [Migration("20231011094524_Initial_Migration")]
-    partial class Initial_Migration
+    [Migration("20231105112432_initial_migration")]
+    partial class initial_migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,71 +22,82 @@ namespace Artema.Platform.Infrastructure.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("public")
-                .HasAnnotation("ProductVersion", "7.0.12")
+                .HasAnnotation("ProductVersion", "7.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Artema.Platform.Infrastructure.Data.TableModels.ProductCategoryTable", b =>
+            modelBuilder.Entity("Artema.Platform.Infrastructure.Data.TableModels.ProductCategoryTableModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Instant>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamptz")
+                        .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
 
                     b.Property<bool>("IsService")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_service");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("name");
 
                     b.Property<Instant?>("UpdatedAt")
-                        .HasColumnType("timestamptz");
+                        .HasColumnType("timestamptz")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PRODUCT_CATEGORIES", "public");
+                    b.ToTable("product_categories", "public");
                 });
 
-            modelBuilder.Entity("Artema.Platform.Infrastructure.Data.TableModels.ProductTable", b =>
+            modelBuilder.Entity("Artema.Platform.Infrastructure.Data.TableModels.ProductTableModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid?>("CategoryId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("category_id");
 
                     b.Property<Instant>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamptz")
+                        .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("name");
 
                     b.Property<long>("Pvp")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("pvp");
 
                     b.Property<Instant?>("UpdatedAt")
-                        .HasColumnType("timestamptz");
+                        .HasColumnType("timestamptz")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("PRODUCTS", "public");
+                    b.ToTable("products", "public");
                 });
 
-            modelBuilder.Entity("Artema.Platform.Infrastructure.Data.TableModels.ProductTable", b =>
+            modelBuilder.Entity("Artema.Platform.Infrastructure.Data.TableModels.ProductTableModel", b =>
                 {
-                    b.HasOne("Artema.Platform.Infrastructure.Data.TableModels.ProductCategoryTable", "Category")
+                    b.HasOne("Artema.Platform.Infrastructure.Data.TableModels.ProductCategoryTableModel", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.SetNull);
@@ -94,7 +105,7 @@ namespace Artema.Platform.Infrastructure.Data.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Artema.Platform.Infrastructure.Data.TableModels.ProductCategoryTable", b =>
+            modelBuilder.Entity("Artema.Platform.Infrastructure.Data.TableModels.ProductCategoryTableModel", b =>
                 {
                     b.Navigation("Products");
                 });

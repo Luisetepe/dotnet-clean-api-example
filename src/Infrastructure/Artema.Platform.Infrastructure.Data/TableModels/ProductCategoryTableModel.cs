@@ -19,15 +19,21 @@ public class ProductCategoryTableConfiguration
     {
         base.Configure(builder);
 
-        builder.ToTable("PRODUCT_CATEGORIES");
+        builder.ToTable("product_categories");
 
         builder.HasKey(p => p.Id);
 
+        builder.Property(p => p.Id)
+            .HasColumnName("id")
+            .HasColumnType("uuid");
+
         builder.Property(p => p.Name)
+            .HasColumnName("name")
             .HasColumnType("varchar(100)")
             .IsRequired();
 
         builder.Property(p => p.IsService)
+            .HasColumnName("is_service")
             .HasColumnType("boolean")
             .IsRequired();
     }

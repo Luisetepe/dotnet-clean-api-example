@@ -15,17 +15,21 @@ public class GetProductByIdEndpointTests : TestClass<EndpointTestFixture>
     public async Task Given_ProductId_GetProductById_Endpoint_Should_Return_Expected_Product()
     {
         var dbContext = Fixture.GetDbContext();
-        var productId = dbContext.Products.First().Id;
+        var product = dbContext.Products.First();
 
         var (httpRes, response) = await Fixture.Client
             .GETAsync<GetProductByIdEndpoint, GetProductByIdRequest, GetProductByIdResponse>(new()
         {
-            Id = productId
+            Id = product.Id
         });
 
         httpRes.IsSuccessStatusCode.ShouldBeTrue();
         response.ShouldNotBeNull();
-        response.Id.ShouldBe(productId);
+        response.Id.ShouldBe(product.Id);
+        response.Name.ShouldBe(product.Name);
+        response.Pvp.ShouldBe(product.Pvp);
+        response.CategoryId.ShouldBe(product.CategoryId);
+        response.CreatedAt.ShouldBe(product.CreatedAt);
     }
 
     [Fact]

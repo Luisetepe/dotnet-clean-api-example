@@ -35,7 +35,9 @@ public class CreateProductEndpoint : Endpoint<CreateProductRequest, CreateProduc
         {
             Id = result.ProductData.Id,
             Name = result.ProductData.Name,
-            Pvp = result.ProductData.Pvp
+            Pvp = result.ProductData.Pvp,
+            CategoryId = result.ProductData.CategoryId,
+            CreatedAt = result.ProductData.CreatedAt
         };
 
         await SendCreatedAtAsync<GetProductByIdEndpoint>(new { Id = response.Id }, response, cancellation: ct);

@@ -20,17 +20,27 @@ public class ProductTableConfiguration
     {
         base.Configure(builder);
 
-        builder.ToTable("PRODUCTS");
+        builder.ToTable("products");
 
         builder.HasKey(p => p.Id);
 
+        builder.Property(p => p.Id)
+            .HasColumnName("id")
+            .HasColumnType("uuid");
+
         builder.Property(p => p.Name)
+            .HasColumnName("name")
             .HasColumnType("varchar(100)")
             .IsRequired();
 
         builder.Property(p => p.Pvp)
+            .HasColumnName("pvp")
             .HasColumnType("bigint")
             .IsRequired();
+
+        builder.Property(p => p.CategoryId)
+            .HasColumnName("category_id")
+            .HasColumnType("uuid");
 
         builder.HasOne(p => p.Category)
             .WithMany(pc => pc.Products)

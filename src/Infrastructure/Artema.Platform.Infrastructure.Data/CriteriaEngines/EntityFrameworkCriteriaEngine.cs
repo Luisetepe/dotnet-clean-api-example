@@ -37,12 +37,12 @@ public static class EntityFrameworkCriteriaEngine
 
     private static IOrderedQueryable<T> ApplyOrder<T>(IQueryable<T> query, Order order)
     {
-        var searchName = order.OrderBy.Value.ToLower();
+        var searchName = order.OrderBy.Value.Replace("-", string.Empty).ToLower();
         if (typeof(T).GetProperties().All(prop => prop.Name.ToLower() != searchName))
         {
             throw new InvalidColumnException(typeof(T).Name, order.OrderBy.Value);
         }
-        
+
         var param = Expression.Parameter(typeof(T), "orderParam");
         var propExpression = Expression.Property(param, order.OrderBy.Value);
         var expr = Expression.Lambda<Func<T, object>>(Expression.Convert(propExpression, typeof(object)), param);
@@ -58,14 +58,14 @@ public static class EntityFrameworkCriteriaEngine
     {
         foreach (var filter in filters)
         {
-            var searchName = filter.FilterType.Value.ToLower();
+            var searchName = filter.FilterField.Value.Replace("-", string.Empty).ToLower();
             if (typeof(T).GetProperties().All(prop => prop.Name.ToLower() != searchName))
             {
-                throw new InvalidColumnException(typeof(T).Name, filter.FilterType.Value);
+                throw new InvalidColumnException(typeof(T).Name, filter.FilterField.Value);
             }
-            
+
             var param = Expression.Parameter(typeof(T), "filterParam");
-            var propExpression = Expression.Property(param, filter.FilterType.Value);
+            var propExpression = Expression.Property(param, filter.FilterField.Value);
 
             var value = filter.FilterValue;
             if (propExpression.Type != typeof(string))
