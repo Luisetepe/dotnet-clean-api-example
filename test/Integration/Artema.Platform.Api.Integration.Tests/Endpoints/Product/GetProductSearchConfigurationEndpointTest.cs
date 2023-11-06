@@ -22,7 +22,7 @@ public class GetProductSearchConfigurationEndpointTest : TestClass<EndpointTestF
                 { "CategoryId", new[] { "eq", "neq" } },
                 { "CreatedAt", new[] { "eq", "neq", "gt", "gte", "lt", "lte" } }
             },
-            OrderByFields = new[] { "Id", "Name", "Pvp", "CategoryId", "CreatedAt" },
+            OrderByFields = new List<string> { "Id", "Name", "Pvp", "CategoryId", "CreatedAt" },
         };
 
 
@@ -31,6 +31,10 @@ public class GetProductSearchConfigurationEndpointTest : TestClass<EndpointTestF
 
         httpRes.IsSuccessStatusCode.ShouldBeTrue();
         response.ShouldNotBeNull();
-        response.ShouldBe(expectedResult);
+        response.Endpoint.ShouldBeEquivalentTo(expectedResult.Endpoint);
+        response.FilterFields
+            .Aggregate(true, (acc, next) => acc && next.Value.SequenceEqual(expectedResult.FilterFields[next.Key]))
+            .ShouldBeTrue();
+        response.OrderByFields.SequenceEqual(expectedResult.OrderByFields).ShouldBeTrue();
     }
 }
