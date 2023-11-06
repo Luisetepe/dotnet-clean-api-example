@@ -1,4 +1,4 @@
-namespace Artema.Platform.Application.UseCases.Queries;
+namespace Artema.Platform.Application.UseCases.Queries.GetAllProductCategories;
 
 public record GetAllProductCategoriesQueryResponse
 {
@@ -8,6 +8,6 @@ public record GetAllProductCategoriesQueryResponse
         public string Name { get; init; } = default!;
         public bool IsService { get; set; }
     }
-    
+
     public IEnumerable<ProductCategory> ProductCategories { get; init; } = default!;
 }

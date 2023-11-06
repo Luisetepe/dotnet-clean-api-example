@@ -8,14 +8,14 @@ public class Product : Entity<EntityId>
     public ProductName Name { get; private set; }
     public ProductPvp Pvp { get; private set; }
     public EntityId? CategoryId { get; private set; }
-    public Instant CreateDate { get; }
+    public Instant CreatedAt { get; }
 
     private Product(EntityId id, ProductName name, ProductPvp pvp, EntityId? categoryId, Instant createDate) : base(id)
     {
         Name = name;
         Pvp = pvp;
         CategoryId = categoryId;
-        CreateDate = createDate;
+        CreatedAt = createDate;
     }
 
     public static Product FromPrimitives(Guid id, string name, long pvp, Guid? categoryId, Instant createDate)

@@ -45,7 +45,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
                 Name = product.Name.Value,
                 Pvp = product.Pvp.Value,
                 CategoryId = product.CategoryId?.Value,
-                CreatedAt = product.CreateDate
+                CreatedAt = product.CreatedAt
             }
         };
     }

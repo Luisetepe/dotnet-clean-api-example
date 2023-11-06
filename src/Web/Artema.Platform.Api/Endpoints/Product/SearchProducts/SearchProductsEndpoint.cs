@@ -24,15 +24,17 @@ public class SearchProductsEndpoint : Endpoint<SearchProductsRequest, SearchProd
         var criteria = request.ToCriteria();
         var result = await _sender.Send(new SearchProductsQuery{Criteria = criteria}, ct);
 
-        await SendOkAsync(
-            new SearchProductsResponse{
+        await SendOkAsync
+        (
+            new SearchProductsResponse
+            {
                 Products = result.Products.Select(p => new SearchProductsResponse.Product
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Pvp = p.Pvp,
                     CategoryId = p.CategoryId,
-                    CreateDate = p.CreatedAt
+                    CreatedAt = p.CreatedAt
                 })
             },
             cancellation: ct

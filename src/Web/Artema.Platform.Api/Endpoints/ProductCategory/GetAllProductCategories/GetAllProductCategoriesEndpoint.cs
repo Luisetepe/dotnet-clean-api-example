@@ -1,4 +1,4 @@
-using Artema.Platform.Application.UseCases.Queries;
+using Artema.Platform.Application.UseCases.Queries.GetAllProductCategories;
 using FastEndpoints;
 using MediatR;
 
@@ -23,16 +23,18 @@ public class GetAllProductCategoriesEndpoint : EndpointWithoutRequest<GetAllProd
     {
         var result = await _sender.Send(new GetAllProductCategoriesQuery(), cancellationToken);
 
-        await SendOkAsync(new GetAllProductCategoriesResponse
-        {
-            ProductCategories = result.ProductCategories.Select(x => new GetAllProductCategoriesResponse.ProductCategory
+        await SendOkAsync
+        (
+            new GetAllProductCategoriesResponse
             {
-                Id = x.Id,
-                Name = x.Name,
-                IsService = x.IsService,
-            })
-        },
-        cancellationToken
-    );
+                ProductCategories = result.ProductCategories.Select(x => new GetAllProductCategoriesResponse.ProductCategory
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    IsService = x.IsService,
+                })
+            },
+            cancellationToken
+        );
     }
 }

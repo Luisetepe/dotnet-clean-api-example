@@ -1,7 +1,7 @@
 using Artema.Platform.Application.Interfaces;
 using MediatR;
 
-namespace Artema.Platform.Application.UseCases.Queries;
+namespace Artema.Platform.Application.UseCases.Queries.GetAllProductCategories;
 
 public class GetAllProductCategoriesQueryHandler : IRequestHandler<GetAllProductCategoriesQuery, GetAllProductCategoriesQueryResponse>
 {

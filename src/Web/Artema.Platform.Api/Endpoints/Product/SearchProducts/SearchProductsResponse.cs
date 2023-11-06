@@ -10,7 +10,7 @@ public record SearchProductsResponse
         public string Name { get; init; } = default!;
         public long Pvp { get; init; }
         public Guid? CategoryId { get; init; }
-        public Instant CreateDate { get; init; }
+        public Instant CreatedAt { get; init; }
     }
 
     public IEnumerable<Product> Products { get; init; } = Array.Empty<Product>();

@@ -28,7 +28,7 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, G
                 Name = product.Name.Value,
                 Pvp = product.Pvp.Value,
                 CategoryId = product.CategoryId?.Value,
-                CreatedAt = product.CreateDate
+                CreatedAt = product.CreatedAt
             }
         };
     }

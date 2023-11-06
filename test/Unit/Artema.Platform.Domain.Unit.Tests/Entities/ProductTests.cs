@@ -16,15 +16,15 @@ public class ProductTests
     {
         Should.Throw<DomainException>(() =>
             Product.FromPrimitives(
-                Guid.Parse(id), 
-                name, 
-                pvp, 
+                Guid.Parse(id),
+                name,
+                pvp,
                 categoryId is null ? null : Guid.Parse(categoryId),
                 SystemClock.Instance.GetCurrentInstant()
             )
         );
     }
-    
+
     [Theory]
     [InlineData("a4ccab72-aba3-43c9-aaeb-a546242bf6ef", "CocaCola", 200, "555d9347-57be-44aa-b462-13d394277987")]
     [InlineData("a4ccab72-aba3-43c9-aaeb-a546242bf6ef", "Fanta_Naranja", 200, "555d9347-57be-44aa-b462-13d394277987")]
@@ -40,7 +40,7 @@ public class ProductTests
             categoryId is null ? null : Guid.Parse(categoryId),
             now
         );
-        
+
         product.Id.Value.ToString().ShouldBe(id);
         product.Name.Value.ShouldBe(name);
         product.Pvp.Value.ShouldBe(pvp);
@@ -48,7 +48,7 @@ public class ProductTests
             product.CategoryId.ShouldBeNull();
         else
             product.CategoryId!.Value.ToString().ShouldBe(categoryId);
-        product.CreateDate.ShouldBe(now);
-        
+        product.CreatedAt.ShouldBe(now);
+
     }
 }

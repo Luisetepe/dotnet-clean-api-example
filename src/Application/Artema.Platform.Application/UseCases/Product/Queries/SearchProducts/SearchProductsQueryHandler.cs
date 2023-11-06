@@ -25,7 +25,7 @@ public class SearchProductsQueryHandler : IRequestHandler<SearchProductsQuery, S
                     Name = p.Name.Value,
                     Pvp = p.Pvp.Value,
                     CategoryId = p.CategoryId?.Value,
-                    CreatedAt = p.CreateDate
+                    CreatedAt = p.CreatedAt
                 }
             )
         };

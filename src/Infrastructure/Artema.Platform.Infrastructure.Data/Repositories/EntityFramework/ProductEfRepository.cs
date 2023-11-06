@@ -19,6 +19,33 @@ public class ProductEfRepository : IProductRepository
         _dbContext = dbContext;
     }
 
+    public SearchConfiguration GetSearchConfiguration()
+    {
+        var filterFields = new Dictionary<string, string[]>
+        {
+            { nameof(ProductTableModel.Id), new[] { "eq", "neq" } },
+            { nameof(ProductTableModel.Name), new[] { "eq", "neq", "inc" } },
+            { nameof(ProductTableModel.Pvp), new[] { "eq", "neq", "gt", "gte", "lt", "lte" } },
+            { nameof(ProductTableModel.CategoryId), new[] { "eq", "neq" } },
+            { nameof(ProductTableModel.CreatedAt), new[] { "eq", "neq", "gt", "gte", "lt", "lte" } }
+        };
+
+        var orderByFields = new[]
+        {
+            nameof(ProductTableModel.Id),
+            nameof(ProductTableModel.Name),
+            nameof(ProductTableModel.Pvp),
+            nameof(ProductTableModel.CategoryId),
+            nameof(ProductTableModel.CreatedAt)
+        };
+
+        return new SearchConfiguration
+        {
+            FilterFields = filterFields,
+            OrderByFields = orderByFields
+        };
+    }
+
     public async Task<IEnumerable<Product>> SearchProducts(SearchCriteria criteria, CancellationToken ct = default)
     {
         var query = EntityFrameworkCriteriaEngine.ApplyCriteria(_dbContext.Products.AsNoTracking(), criteria);
@@ -60,7 +87,7 @@ public class ProductEfRepository : IProductRepository
             Name = product.Name.Value,
             Pvp = product.Pvp.Value,
             CategoryId = product.CategoryId?.Value,
-            CreatedAt = product.CreateDate
+            CreatedAt = product.CreatedAt
         };
 
         await _dbContext.Products.AddAsync(productTable, ct);
@@ -77,7 +104,7 @@ public class ProductEfRepository : IProductRepository
             Name = product.Name.Value,
             Pvp = product.Pvp.Value,
             CategoryId = product.CategoryId?.Value,
-            CreatedAt = product.CreateDate
+            CreatedAt = product.CreatedAt
         };
 
         _dbContext.Update(productTable);

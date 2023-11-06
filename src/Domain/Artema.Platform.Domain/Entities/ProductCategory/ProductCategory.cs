@@ -7,15 +7,15 @@ public class ProductCategory : Entity<EntityId>
 {
     public CategoryName Name { get; private set; }
     public bool IsService { get; set; }
-    public Instant CreateDate { get; }
+    public Instant CreatedAt { get; }
 
     private ProductCategory(EntityId id, CategoryName name, bool isService, Instant createDate) : base(id)
     {
         Name = name;
         IsService = isService;
-        CreateDate = createDate;
+        CreatedAt = createDate;
     }
-    
+
     public static ProductCategory FromPrimitives(Guid id, string name, bool isService, Instant createDate)
     {
         return new ProductCategory
