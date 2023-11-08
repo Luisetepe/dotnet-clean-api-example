@@ -24,5 +24,6 @@
     "**/.hg/store/**": true,
     "**/bin": true,
     "**/obj": true
-  }
+  },
+  "workbench.colorTheme": "Flate Italic"
 }

@@ -16,16 +16,16 @@ public abstract record BaseSearchRequest
 {
     public SearchFilter[]? Filters { get; init; }
     public string? OrderBy { get; init; }
-    public string OrderType { get; init; } = "asc";
+    public string? OrderType { get; init; }
     public int? Limit { get; init; }
     public int? Offset { get; init; }
 
-    public SearchCriteria ToCriteria()
+    public virtual SearchCriteria ToCriteria()
     {
         return new SearchCriteria
         (
             Filters?.Select(f => Filter.FromPrimitives(f.Value, f.Field, f.Operator)).ToArray(),
-            OrderBy is not null ? Order.FromPrimitives(OrderBy, OrderType) : null,
+            OrderBy is not null && OrderType is not null ? Order.FromPrimitives(OrderBy, OrderType) : null,
             Limit.HasValue ? Domain.Criteria.Limit.FromValue(Limit.Value) : null,
             Offset.HasValue ? Domain.Criteria.Offset.FromValue(Offset.Value) : null
         );
@@ -36,10 +36,13 @@ public abstract class BaseSearchRequestValidator<T> : Validator<T> where T : Bas
 {
     protected BaseSearchRequestValidator()
     {
-        RuleFor(x => x.OrderType).NotEmpty();
         When(x => x.OrderBy is not null, () =>
         {
             RuleFor(x => x.OrderBy).NotEmpty();
+        });
+        When(x => x.OrderType is not null, () =>
+        {
+            RuleFor(x => x.OrderType).NotEmpty();
         });
         When(x => x.Filters is not null, () =>
         {

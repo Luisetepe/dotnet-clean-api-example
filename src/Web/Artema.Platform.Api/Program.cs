@@ -22,12 +22,19 @@ builder.Services.AddDbContextInfrastructure(
     : databaseConfiguration.ConnectionString
 );
 
+builder.Services.AddCors(policyBuilder =>
+    policyBuilder.AddDefaultPolicy(policy =>
+        policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
+);
+
+
 // Configure the HTTP request pipeline.
 
 var app = builder.Build();
 app.UseApiEndpoints();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
+app.UseCors();
 app.Run();
 
 public partial class Program {}

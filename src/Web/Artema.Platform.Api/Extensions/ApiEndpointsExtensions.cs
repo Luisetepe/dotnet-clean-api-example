@@ -33,6 +33,7 @@ public static class ApiEndpointsExtensions
             .UseCustomExceptionHandler()
             .UseFastEndpoints(config =>
             {
+                config.Endpoints.ShortNames = true;
                 config.Errors.ResponseBuilder = (failures, _, statusCode) => new ValidationExceptionResponse
                 {
                     StatusCode = statusCode,
