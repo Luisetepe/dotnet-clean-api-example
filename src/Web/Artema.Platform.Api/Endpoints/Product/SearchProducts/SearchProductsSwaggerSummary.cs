@@ -11,8 +11,7 @@ public class SearchProductsSwaggerSummary : Summary<SearchProductsEndpoint>
         ExampleRequest = new SearchProductsRequest
         {
             Filters = new[] { new SearchFilter { Field = "pvp", Value = "2500", Operator = "gte" } },
-            OrderBy = "pvp",
-            OrderType = "desc",
+            Order = new SearchOrder { OrderBy = "pvp", OrderType = "asc" },
             Limit = 5
         };
         Response(200, "A list of Products found by given criteria.", example: new SearchProductsResponse

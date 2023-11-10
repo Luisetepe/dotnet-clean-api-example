@@ -46,14 +46,28 @@ public class ProductEfRepository : IProductRepository
         };
     }
 
-    public async Task<IEnumerable<Product>> SearchProducts(SearchCriteria criteria, CancellationToken ct = default)
+    public async Task<(IEnumerable<Product>, int)> SearchProducts
+    (
+        SearchCriteria criteria,
+        bool withTotalResults = false,
+        CancellationToken ct = default
+    )
     {
-        var query = EntityFrameworkCriteriaEngine.ApplyCriteria(_dbContext.Products.AsNoTracking(), criteria);
+        var query = EntityFrameworkCriteriaEngine
+            .ApplyCriteria(_dbContext.Products.AsNoTracking(), criteria);
+
         var result = await query
             .Select(table => Product.FromPrimitives(table.Id, table.Name, table.Pvp, table.CategoryId, table.CreatedAt))
             .ToListAsync(ct);
 
-        return result;
+        if (!withTotalResults) return (result, 0);
+
+        var totalQuery = EntityFrameworkCriteriaEngine
+            .ApplyCriteria(_dbContext.Products.AsNoTracking(), criteria.WithoutPagination());
+
+        var count = await totalQuery.CountAsync(ct);
+
+        return (result, count);
     }
 
     public async Task<IEnumerable<Product>> GetAllProducts(CancellationToken ct = default)

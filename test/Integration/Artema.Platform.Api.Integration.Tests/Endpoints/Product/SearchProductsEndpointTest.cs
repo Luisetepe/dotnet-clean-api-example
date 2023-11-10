@@ -17,11 +17,10 @@ public class SearchProductsEndpointTest : TestClass<EndpointTestFixture>
             .POSTAsync<SearchProductsEndpoint, SearchProductsRequest, SearchProductsResponse>(new()
         {
             Filters = new []{ new SearchFilter{Field = "pvp", Value = "2500", Operator = "gte"} },
-            OrderBy = "pvp",
-            OrderType = "desc",
+            Order = new SearchOrder { OrderBy = "pvp", OrderType = "asc" },
             Limit = 5
         });
-    
+
         httpResByPvp.IsSuccessStatusCode.ShouldBeTrue();
         responseByPvp.Products.Count().ShouldBe(5);
         responseByPvp.Products.Count(x => x.Pvp >= 2500).ShouldBe(5);
@@ -32,8 +31,7 @@ public class SearchProductsEndpointTest : TestClass<EndpointTestFixture>
             .POSTAsync<SearchProductsEndpoint, SearchProductsRequest, SearchProductsResponse>(new()
         {
             Filters = new []{ new SearchFilter{Field = "name", Value = "on", Operator = "inc"} },
-            OrderBy = "name",
-            OrderType = "asc",
+            Order = new SearchOrder { OrderBy = "name", OrderType = "asc" },
             Limit = 3
         });
 
@@ -47,8 +45,7 @@ public class SearchProductsEndpointTest : TestClass<EndpointTestFixture>
             .POSTAsync<SearchProductsEndpoint, SearchProductsRequest, SearchProductsResponse>(new()
         {
             Filters = new []{ new SearchFilter{Field = "name", Value = "no_product_has_this_name", Operator = "inc"} },
-            OrderBy = "name",
-            OrderType = "asc"
+            Order = new SearchOrder { OrderBy = "name", OrderType = "asc" }
         });
 
         httpResEmpty.IsSuccessStatusCode.ShouldBeTrue();

@@ -12,11 +12,17 @@ public record SearchFilter
     public string Operator { get; init; } = default!;
 }
 
+public record SearchOrder
+{
+    public string OrderBy { get; init; } = default!;
+    public string OrderType { get; init; } = default!;
+
+}
+
 public abstract record BaseSearchRequest
 {
     public SearchFilter[]? Filters { get; init; }
-    public string? OrderBy { get; init; }
-    public string? OrderType { get; init; }
+    public SearchOrder? Order { get; init; }
     public int? Limit { get; init; }
     public int? Offset { get; init; }
 
@@ -24,8 +30,8 @@ public abstract record BaseSearchRequest
     {
         return new SearchCriteria
         (
-            Filters?.Select(f => Filter.FromPrimitives(f.Value, f.Field, f.Operator)).ToArray(),
-            OrderBy is not null && OrderType is not null ? Order.FromPrimitives(OrderBy, OrderType) : null,
+            Filters?.Select(f => Domain.Criteria.Filter.FromPrimitives(f.Value, f.Field, f.Operator)).ToArray(),
+            Order is not null ? Domain.Criteria.Order.FromPrimitives(Order.OrderBy, Order.OrderType) : null,
             Limit.HasValue ? Domain.Criteria.Limit.FromValue(Limit.Value) : null,
             Offset.HasValue ? Domain.Criteria.Offset.FromValue(Offset.Value) : null
         );
@@ -36,13 +42,14 @@ public abstract class BaseSearchRequestValidator<T> : Validator<T> where T : Bas
 {
     protected BaseSearchRequestValidator()
     {
-        When(x => x.OrderBy is not null, () =>
+        When(x => x.Order is not null, () =>
         {
-            RuleFor(x => x.OrderBy).NotEmpty();
-        });
-        When(x => x.OrderType is not null, () =>
-        {
-            RuleFor(x => x.OrderType).NotEmpty();
+            RuleFor(x => x.Order!.OrderBy)
+                .NotEmpty();
+
+            RuleFor(x => x.Order!.OrderType)
+                .NotEmpty()
+                .Must(x => x.ToLower() == "asc" || x.ToLower() == "desc");
         });
         When(x => x.Filters is not null, () =>
         {

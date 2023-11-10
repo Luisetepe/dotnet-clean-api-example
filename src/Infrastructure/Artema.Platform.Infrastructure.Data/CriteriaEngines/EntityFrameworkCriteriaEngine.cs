@@ -22,14 +22,14 @@ public static class EntityFrameworkCriteriaEngine
             query = ApplyOrder(query, criteria.Order!);
         }
 
-        if (criteria.HasLimit())
-        {
-            query = query.Take(criteria.Limit!.Value);
-        }
-
         if (criteria.HasOffset())
         {
             query = query.Skip(criteria.Offset!.Value);
+        }
+
+        if (criteria.HasLimit())
+        {
+            query = query.Take(criteria.Limit!.Value);
         }
 
         return query;

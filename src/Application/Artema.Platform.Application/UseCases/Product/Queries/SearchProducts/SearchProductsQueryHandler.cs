@@ -14,11 +14,11 @@ public class SearchProductsQueryHandler : IRequestHandler<SearchProductsQuery, S
 
     public async Task<SearchProductsQueryResponse> Handle(SearchProductsQuery request, CancellationToken cancellationToken)
     {
-        var result = await _unitOfWork.ProductRepository.SearchProducts(request.Criteria, cancellationToken);
+        var (products, totalResults) = await _unitOfWork.ProductRepository.SearchProducts(request.Criteria, true, cancellationToken);
 
         return new SearchProductsQueryResponse
         {
-            Products = result.Select(p =>
+            Products = products.Select(p =>
                 new SearchProductsQueryResponse.Product
                 {
                     Id = p.Id.Value,
@@ -27,7 +27,8 @@ public class SearchProductsQueryHandler : IRequestHandler<SearchProductsQuery, S
                     CategoryId = p.CategoryId?.Value,
                     CreatedAt = p.CreatedAt
                 }
-            )
+            ),
+            TotalResults = totalResults
         };
     }
 }

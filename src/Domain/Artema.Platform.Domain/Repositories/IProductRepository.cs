@@ -7,7 +7,12 @@ namespace Artema.Platform.Domain.Repositories;
 public interface IProductRepository
 {
     SearchConfiguration GetSearchConfiguration();
-    Task<IEnumerable<Product>> SearchProducts(SearchCriteria criteria, CancellationToken ct = default);
+    Task<(IEnumerable<Product>, int)> SearchProducts
+    (
+        SearchCriteria criteria,
+        bool withTotalResults = false,
+        CancellationToken ct = default
+    );
     Task<IEnumerable<Product>> GetAllProducts(CancellationToken ct = default);
     Task<Product?> GetProductById(EntityId id, CancellationToken ct = default);
     Task CreateProduct(Product product, CancellationToken ct = default);

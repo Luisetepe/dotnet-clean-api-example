@@ -35,7 +35,8 @@ public class SearchProductsEndpoint : Endpoint<SearchProductsRequest, SearchProd
                     Pvp = p.Pvp,
                     CategoryId = p.CategoryId,
                     CreatedAt = p.CreatedAt
-                })
+                }),
+                TotalResults = result.TotalResults
             },
             cancellation: ct
         );

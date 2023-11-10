@@ -14,4 +14,5 @@ public record SearchProductsQueryResponse
     }
 
     public IEnumerable<Product> Products { get; init; } = Array.Empty<Product>();
+    public int TotalResults { get; init; }
 }

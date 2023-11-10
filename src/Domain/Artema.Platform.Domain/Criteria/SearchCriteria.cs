@@ -34,4 +34,9 @@ public class SearchCriteria
     {
         return Offset is not null;
     }
+
+    public SearchCriteria WithoutPagination()
+    {
+        return new SearchCriteria(Filters, Order);
+    }
 }
